@@ -9,7 +9,7 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch("https://cyf-react.glitch.me")
+    fetch("https://cyf-react.glitch.me/")
       .then(res => {
         if (!res.ok) {
           throw Error("Sorry. Page cannot be loaded");
