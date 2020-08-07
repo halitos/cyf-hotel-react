@@ -6,17 +6,40 @@ const SearchResults = ({ results, setBookings }) => {
   const [selectedProfile, setSelectedProfile] = useState("");
   const [isSorted, setIsSorted] = useState(false);
 
-  const sortTable = () => {
-    if (!isSorted) {
-      const sortedBookings = results.sort((a, b) =>
-        a.surname.localeCompare(b.surname)
-      );
-      setIsSorted(true);
-      setBookings([...sortedBookings]);
-    } else {
-      const reversedBookings = results.reverse();
-      setBookings([...reversedBookings]);
-    }
+  // const sortTable = () => {
+  //   if (!isSorted) {
+  //     const sortedBookings = results.sort((a, b) =>
+  //       a.surname.localeCompare(b.surname)
+  //     );
+  //     setIsSorted(true);
+  //     setBookings([...sortedBookings]);
+  //   } else {
+  //     const reversedBookings = results.reverse();
+  //     setBookings([...reversedBookings]);
+  //   }
+  // };
+
+  const sortTable = event => {
+    console.log(event.target.value);
+    const column = event.target.title;
+    console.log(column);
+    const sortedBookings = sortByColumnName(column, !!isSorted[column]);
+    setIsSorted({ ...isSorted, [column]: !isSorted[column] });
+    setBookings(sortedBookings);
+  };
+
+  const sortByColumnName = (column, isAscending) => {
+    return results.sort((a, b) =>
+      a[column] > b[column]
+        ? isAscending
+          ? -1
+          : 1
+        : a[column] < b[column]
+        ? isAscending
+          ? 1
+          : -1
+        : 0
+    );
   };
 
   const selectId = customerId => {
